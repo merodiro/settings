@@ -17,7 +17,7 @@ class SettingsManger
         Setting::updateOrCreate(['key' => $key], ['value' => $value]);
     }
 
-    public function get($key, $default = NULL)
+    public function get($key, $default = null)
     {
         $cache_key = config('settings.cache_prefix') . $key;
         $duration = config('settings.cache_duration');

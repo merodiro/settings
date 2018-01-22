@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Cache;
 
 class SettingObserver
 {
-
     public function updated(Setting $setting)
     {
         $cache_key = config('settings.cache_prefix') . $setting->key;
