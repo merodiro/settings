@@ -21,7 +21,7 @@
                 <directory suffix=".php">src/commands</directory>
                 <file>src/SettingssServiceProvider.php</file>
                 <file>src/config/settings.php</file>
-                <file>src/models/Setting.php</file>
+                <file>src/Setting.php</file>
             </exclude>
         </whitelist>
     </filter>
