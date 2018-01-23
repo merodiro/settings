@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Merodiro\\Settings\\": "src"
+            "Merodiro\\Settings\\": "src/"
         }
     },
     "autoload-dev": {

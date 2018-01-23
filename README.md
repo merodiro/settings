@@ -15,6 +15,9 @@ publish config through
 ```bash
 $ php artisan vendor:publish --provider=Merodiro\Settings\SettingsServiceProvider
 ```
+## Usage
+
+`TODO`
 
 ## Testing
 
