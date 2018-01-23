@@ -12,10 +12,10 @@ addons:
 
 cache:
   directories:
-    - $HOME/.composer/cache
+    - $HOME/.composer/cache/files
 
 install:
-  - travis_retry composer install --prefer-dist --no-interaction
+  - composer install --prefer-dist --no-interaction
 
 script:
   - vendor/bin/phpunit
