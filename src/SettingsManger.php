@@ -26,7 +26,7 @@ class SettingsManger
             return Setting::where('key', $key)->pluck('value')->first();
         });
 
-        return $value? $value: $default;
+        return $value ? $value : $default;
     }
 
     public function forget($key)
