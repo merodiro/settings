@@ -23,6 +23,34 @@ class SettingsTest extends TestCase
         $this->assertEquals('test value', Settings::get('name'));
     }
 
+    public function testSettingsAll()
+    {
+        Settings::set('name', 'value');
+        Settings::set('another name', 'another value');
+        Settings::set('one more name', 'one more value');
+
+        $this->assertCount(3, Settings::all());
+    }
+
+    public function testSettingsFlush()
+    {
+        Settings::set('name', 'value');
+        Settings::set('another name', 'another value');
+        Settings::set('one more name', 'one more value');
+
+        Cache::shouldReceive('forget')
+            ->times(3)
+            ->with(Mockery::type('string'));
+
+        Settings::flush();
+
+        $this->assertCount(0, Settings::all());
+        $this->assertDatabaseMissing('settings', [
+            'key' => 'name',
+            'value' => 'test value'
+        ]);
+    }
+
     public function testGetDefaultSettings()
     {
         $this->assertEquals('test value', Settings::get('name', 'test value'));
@@ -70,5 +98,31 @@ class SettingsTest extends TestCase
             ->with('settings_name');
 
         Settings::set('name', 'another value');
+    }
+
+    public function testSettingsCacheCommand()
+    {
+        Settings::set('name', 'value');
+        Settings::set('another name', 'another value');
+        Settings::set('one more name', 'one more value');
+
+        Cache::shouldReceive('set')
+            ->times(3)
+            ->with(Mockery::type('string'), Mockery::type('string'), 60);
+
+        $this->artisan('settings:cache');
+    }
+
+    public function testSettingsClearCommand()
+    {
+        Settings::set('name', 'value');
+        Settings::set('another name', 'another value');
+        Settings::set('one more name', 'one more value');
+
+        Cache::shouldReceive('forget')
+            ->times(3)
+            ->with(Mockery::type('string'));
+
+        $this->artisan('settings:clear');
     }
 }
