@@ -1,6 +1,6 @@
 <?php
 
-namespace Merodiro\Settings\Models;
+namespace Merodiro\Settings;
 
 use Illuminate\Database\Eloquent\Model;
 

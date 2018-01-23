@@ -5,8 +5,6 @@ namespace Merodiro\Settings;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
-use Merodiro\Settings\Models\Setting;
-use Merodiro\Settings\Observers\SettingObserver;
 use Merodiro\Settings\Commands\SettingsCache;
 use Merodiro\Settings\Commands\SettingsClear;
 

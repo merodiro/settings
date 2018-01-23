@@ -2,7 +2,6 @@
 
 namespace Merodiro\Settings;
 
-use Merodiro\Settings\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 
 class SettingsManger
