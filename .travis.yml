@@ -10,18 +10,15 @@ addons:
     code_climate:
         repo_token: 5a04e899e3e361d5069c205066c0b7e790dadaecaf3f7ffc7a45f663e155d5b7
 
-# cache vendor dirs
 cache:
   directories:
     - $HOME/.composer/cache
 
 install:
-  - travis_retry composer self-update
-  - travis_retry composer install --prefer-source --no-interaction
+  - travis_retry composer install --prefer-dist --no-interaction
 
 script:
   - vendor/bin/phpunit
 
 after_script:
   - vendor/bin/test-reporter
-  - bash <(curl -s https://codecov.io/bash)
