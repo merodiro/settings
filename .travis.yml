@@ -15,7 +15,7 @@ install:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - vendor/bin/phpcs --standard=psr2 src/
+  - vendor/bin/phpcs --standard=psr2 src/ --ignore=migrations/
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
