@@ -1,3 +1,4 @@
+dist: trusty
 language: php
 
 php:
@@ -6,22 +7,19 @@ php:
 
 sudo: false
 
-addons:
-    code_climate:
-        repo_token: 5a04e899e3e361d5069c205066c0b7e790dadaecaf3f7ffc7a45f663e155d5b7
-
 cache:
   directories:
-    - $HOME/.composer/cache/files
+    - $HOME/.composer/cache
 
 install:
   - composer install --prefer-dist --no-interaction
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpcs --standard=psr2 src/
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
-  - vendor/bin/test-reporter
+  - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 notifications:
   email: false
