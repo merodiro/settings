@@ -17,7 +17,7 @@ class SettingsManger
         Setting::updateOrCreate(['key' => $key], ['value' => $value]);
     }
 
-    public function get($key, $default = NULL)
+    public function get($key, $default = null)
     {
         $cache_key = config('settings.cache_prefix') . $key;
         $duration = config('settings.cache_duration');
@@ -26,14 +26,12 @@ class SettingsManger
             return Setting::where('key', $key)->pluck('value')->first();
         });
 
-        return $value ? $value : $default;
+        return $value? $value: $default;
     }
 
     public function forget($key)
     {
-        $cache_key = config('settings.cache_prefix') . $key;
-        Cache::forget($cache_key);
-        Setting::where('key', $key)->delete();
+        Setting::where('key', $key)->first()->delete();
     }
 
     public function flush()

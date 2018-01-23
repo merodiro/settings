@@ -19,6 +19,8 @@
         "php": "~5.6|~7.0"
     },
     "require-dev": {
+        "graham-campbell/testbench": "^5.0",
+        "mockery/mockery": "^1.0",
         "phpunit/phpunit": ">=5.4.3",
         "squizlabs/php_codesniffer": "^2.3"
     },
@@ -28,9 +30,9 @@
         }
     },
     "autoload-dev": {
-        "psr-4": {
-            "Merodiro\\Settings\\": "tests"
-        }
+        "classmap": [
+            "tests/TestCase.php"
+        ]
     },
     "scripts": {
         "test": "phpunit",
