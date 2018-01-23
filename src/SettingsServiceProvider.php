@@ -7,14 +7,11 @@ use Illuminate\Support\Facades\Blade;
 
 use Merodiro\Settings\Commands\SettingsCache;
 use Merodiro\Settings\Commands\SettingsClear;
+use Merodiro\Settings\Observers\SettingObserver;
+use Merodiro\Settings\Models\Setting;
 
 class SettingsServiceProvider extends ServiceProvider
 {
-    /**
-     * Perform post-registration booting of services.
-     *
-     * @return void
-     */
     public function boot()
     {
         $this->publishes([

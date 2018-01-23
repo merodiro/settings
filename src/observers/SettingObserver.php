@@ -1,8 +1,9 @@
 <?php
 
-namespace Merodiro\Settings;
+namespace Merodiro\Settings\Observers;
 
 use Illuminate\Support\Facades\Cache;
+use Merodiro\Settings\Models\Setting;
 
 class SettingObserver
 {
