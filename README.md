@@ -1,11 +1,6 @@
 # settings
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
-[![Total Downloads][ico-downloads]][link-downloads]
+[![Build Status](https://travis-ci.org/merodiro/settings.svg?branch=master)](https://travis-ci.org/merodiro/settings) [![Code Climate](https://codeclimate.com/github/merodiro/settings/badges/gpa.svg)](https://codeclimate.com/github/merodiro/settings) [![Test Coverage](https://codeclimate.com/github/merodiro/settings/badges/coverage.svg)](https://codeclimate.com/github/merodiro/settings/coverage) [![Total Downloads](https://img.shields.io/packagist/dt/merodiro/settings.svg?style=flat)](https://packagist.org/packages/merodiro/settings) [![Version](https://img.shields.io/packagist/v/merodiro/settings.svg?style=flat)](https://packagist.org/packages/merodiro/settings) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 laravel easy `key => value` global settings
 
@@ -37,24 +32,9 @@ If you discover any security related issues, please email merodiro@gmail.com ins
 
 ## Credits
 
-- [Amr A. Mohammed][link-author]
-- [All Contributors][link-contributors]
+- [Amr A. Mohammed](https://github.com/merodiro)
+- [All Contributors](../../contributors)
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-[ico-version]: https://img.shields.io/packagist/v/merodiro/settings.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/merodiro/settings/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/merodiro/settings.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/merodiro/settings.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/merodiro/settings.svg?style=flat-square
-
-[link-packagist]: https://packagist.org/packages/merodiro/settings
-[link-travis]: https://travis-ci.org/merodiro/settings
-[link-scrutinizer]: https://scrutinizer-ci.com/g/merodiro/settings/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/merodiro/settings
-[link-downloads]: https://packagist.org/packages/merodiro/settings
-[link-author]: https://github.com/merodiro
-[link-contributors]: ../../contributors
