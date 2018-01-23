@@ -31,7 +31,7 @@ class SettingsServiceProvider extends ServiceProvider
                 SettingsClear::class
             ]);
         }
-        // Setting::observe(SettingObserver::class);
+        Setting::observe(SettingObserver::class);
 
         Blade::directive('settings', function ($expression) {
             return "<?php echo Settings::get($expression); ?>";
