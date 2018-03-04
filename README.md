@@ -32,7 +32,7 @@ Settings::set('key', 'another value');
 ```
 
 ### Get value from settings
-returns its value if it exists or the second parameter if it doesn't exist
+Returns its value if it exists or the second parameter if it doesn't exist
 and caches settings automatically
 
 ```php
@@ -55,13 +55,13 @@ Settings::flush();
 ```
 
 ### Get all settings
-returns all settings stored in key => value array
+Returns all settings stored in key => value array
 ```php
 $settings = Settings::all();
 ```
 
 ### Cache all settings
-it caches all settings for the duration that has been set in settings.php config file
+Caches all settings for the duration that has been set in settings.php config file
 
 ```bash
 php artisan settings:cache
