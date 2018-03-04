@@ -40,14 +40,14 @@ $value = Settings::get('key', 'default');
 ```
 
 ### Delete key from settings
-It also removes it from cache
+It also removes it from the cache
 
 ```php
 Settings::forget('key');
 ```
 
 ### Delete all settings
-It also removes them from cache
+It also removes them from the cache
 
 ```php
 Settings::flush();
@@ -60,7 +60,7 @@ $settings = Settings::all();
 ```
 
 ### Cache all settings
-it caches all settings for the duration in settings.php config file
+it caches all settings for the duration that has been set in settings.php config file
 
 ```bash
 php artisan settings:cache
