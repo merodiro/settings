@@ -22,7 +22,63 @@ $ php artisan vendor:publish --provider=Merodiro\Settings\SettingsServiceProvide
 ```
 ## Usage
 
-`TODO`
+### Set settings
+It creates a record if the key doesn't exist or update it if the key exists and update the cache
+
+```php
+Settings::set('key', 'value');
+Settings::set('key', 'another value');
+```
+
+### Get value from settings
+It caches settings automatically
+and it returns its value if it exists or the second parameter if it doesn't exist
+
+```php
+$name = Settings::get('site-name');
+$value = Settings::get('key', 'default');
+```
+
+### Delete key from settings
+It also removes it from cache
+
+```php
+Settings::forget('key');
+```
+
+### Delete all settings
+It also removes them from cache
+
+```php
+Settings::flush();
+```
+
+### Get all settings
+returns all settings stored in key => value array
+```php
+$settings = Settings::all();
+```
+
+### Cache all settings
+it caches all settings for the duration in settings.php config file
+
+```bash
+php artisan settings:cache
+```
+
+### Clear cache for all settings
+
+```bash
+php artisan settings:clear
+```
+
+### Get value from blade template
+
+```php
+<h1>@settings('site-name')</h1>
+<h1>@settings('site-name', 'default name')</h1>
+```
+
 
 ## Testing
 
@@ -36,7 +92,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT
 
 ## Security
 
-If you discover any security related issues, please email merodiro@gmail.com instead of using the issue tracker.
+If you discover any security-related issues, please email merodiro@gmail.com instead of using the issue tracker.
 
 ## Credits
 
