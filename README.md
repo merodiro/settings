@@ -23,7 +23,8 @@ $ php artisan vendor:publish --provider=Merodiro\Settings\SettingsServiceProvide
 ## Usage
 
 ### Set settings
-It creates a record if the key doesn't exist or update it if the key exists and update the cache
+creates a record if the key doesn't exist or update it if the key exists
+in addition  to updating the cache
 
 ```php
 Settings::set('key', 'value');
@@ -31,8 +32,8 @@ Settings::set('key', 'another value');
 ```
 
 ### Get value from settings
-It caches settings automatically
-and it returns its value if it exists or the second parameter if it doesn't exist
+returns its value if it exists or the second parameter if it doesn't exist
+and caches settings automatically
 
 ```php
 $name = Settings::get('site-name');
@@ -40,14 +41,14 @@ $value = Settings::get('key', 'default');
 ```
 
 ### Delete key from settings
-It also removes it from the cache
+Remove the key from the cache
 
 ```php
 Settings::forget('key');
 ```
 
 ### Delete all settings
-It also removes them from the cache
+Remove all the keys from the cache
 
 ```php
 Settings::flush();
