@@ -7,6 +7,8 @@ use Merodiro\Settings\Models\Setting;
 
 trait HasSettings
 {
+    abstract public function getKey();
+
     public function allSettings()
     {
         return Setting::where('owner_id', $this->getKey())->pluck('value', 'key');
