@@ -5,7 +5,6 @@ namespace Merodiro\Settings;
 use Illuminate\Support\Facades\Cache;
 use Merodiro\Settings\Models\Setting;
 
-
 trait HasSettings
 {
     public function allSettings()

@@ -6,7 +6,7 @@ class UserSettingsTest extends TestCase
 {
     use RefreshDatabase;
 
-    function testSetSettings()
+    public function testSetSettings()
     {
         $user = factory(User::class)->create();
 
