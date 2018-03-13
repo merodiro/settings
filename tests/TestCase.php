@@ -27,4 +27,12 @@ abstract class TestCase extends AbstractPackageTestCase
         $app['config']->set('settings.cache_duration', 60);
         $app['config']->set('settings.cache_prefix', 'settings_');
     }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations();
+        $this->withFactories(__DIR__.'/database/factories');
+    }
 }

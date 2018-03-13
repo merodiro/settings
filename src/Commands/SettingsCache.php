@@ -39,11 +39,11 @@ class SettingsCache extends Command
      */
     public function handle()
     {
-        $this->comment('Caching all settings');
+        $this->comment('Caching all global settings');
         $settings = Settings::all();
 
         foreach ($settings as $key => $value) {
-            $cache_key = config('settings.cache_prefix') . $key;
+            $cache_key = config('settings.cache_prefix') . $key . '_global';
             $duration = config('settings.cache_duration');
 
             Cache::set($cache_key, $value, $duration);

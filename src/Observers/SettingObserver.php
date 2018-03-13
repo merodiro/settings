@@ -9,14 +9,18 @@ class SettingObserver
 {
     public function updated(Setting $setting)
     {
-        $cache_key = config('settings.cache_prefix') . $setting->key;
+        $suffix = $setting->owner_id ? $setting->owner_id: 'global';
+
+        $cache_key = config('settings.cache_prefix') . $setting->key . '_' . $suffix;
 
         Cache::forget($cache_key);
     }
 
     public function deleted(Setting $setting)
     {
-        $cache_key = config('settings.cache_prefix') . $setting->key;
+        $suffix = $setting->owner_id ? $setting->owner_id: 'global';
+
+        $cache_key = config('settings.cache_prefix') . $setting->key . '_' . $suffix;
 
         Cache::forget($cache_key);
     }

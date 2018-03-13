@@ -20,7 +20,7 @@ class SettingsClear extends Command
      *
      * @var string
      */
-    protected $description = 'Clear settings cache';
+    protected $description = 'Clear global settings cache';
 
     /**
      * Create a new command instance.
@@ -43,7 +43,7 @@ class SettingsClear extends Command
         $settings = Settings::all();
 
         foreach ($settings as $key => $value) {
-            $cache_key = config('settings.cache_prefix') . $key;
+            $cache_key = config('settings.cache_prefix') . $key . '_global';
             Cache::forget($cache_key);
         }
 
