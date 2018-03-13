@@ -7,7 +7,6 @@ use Merodiro\Settings\Models\Setting;
 
 class SettingObserver
 {
-
     private function deleteCache(Setting $setting)
     {
         $suffix = $setting->owner_id ? $setting->owner_id: 'global';
