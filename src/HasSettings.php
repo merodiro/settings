@@ -9,21 +9,21 @@ trait HasSettings
 {
     public function allSettings()
     {
-        return Setting::where('owner_id', $this->id)->pluck('value', 'key');
+        return Setting::where('owner_id', $this->getKey())->pluck('value', 'key');
     }
 
     public function setSettings($key, $value)
     {
-        Setting::updateOrCreate(['key' => $key, 'owner_id' => $this->id], ['value' => $value,]);
+        Setting::updateOrCreate(['key' => $key, 'owner_id' => $this->getKey()], ['value' => $value,]);
     }
 
     public function getSettings($key, $default = null)
     {
-        $cache_key = config('settings.cache_prefix') . $key . '-' . $this->id;
+        $cache_key = config('settings.cache_prefix') . $key . '-' . $this->getKey();
         $duration = config('settings.cache_duration');
 
         $value = Cache::remember($cache_key, $duration, function () use ($key) {
-            return Setting::where('key', $key)->where('owner_id', $this->id)->pluck('value')->first();
+            return Setting::where('key', $key)->where('owner_id', $this->getKey())->pluck('value')->first();
         });
 
         return $value ? $value : $default;
@@ -31,12 +31,12 @@ trait HasSettings
 
     public function forgetSettings($key)
     {
-        Setting::where('key', $key)->where('owner_id', $this->id)->first()->delete();
+        Setting::where('key', $key)->where('owner_id', $this->getKey())->first()->delete();
     }
 
     public function flushSettings()
     {
-        Setting::where('owner_id', $this->id)->each(function ($item) {
+        Setting::where('owner_id', $this->getKey())->each(function ($item) {
             $item->delete();
         });
     }
