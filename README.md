@@ -16,7 +16,10 @@ Via Composer
 ``` bash
 $ composer require merodiro/settings
 ```
+
 publish config through
+Optional: only if you want to edit cache configurations
+
 ```bash
 $ php artisan vendor:publish --provider=Merodiro\Settings\SettingsServiceProvider
 ```
@@ -56,8 +59,16 @@ Settings::flush();
 
 ### Get all settings
 Returns all settings stored in key => value array
+
 ```php
 $settings = Settings::all();
+```
+
+### Get value from blade template
+
+```php
+<h1>@settings('site-name')</h1>
+<h1>@settings('site-name', 'default name')</h1>
 ```
 
 ### Cache all settings
@@ -72,14 +83,6 @@ php artisan settings:cache
 ```bash
 php artisan settings:clear
 ```
-
-### Get value from blade template
-
-```php
-<h1>@settings('site-name')</h1>
-<h1>@settings('site-name', 'default name')</h1>
-```
-
 
 ## Testing
 
