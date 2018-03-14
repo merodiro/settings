@@ -14,17 +14,22 @@ class SettingsManger
 
     public function set($key, $value)
     {
+        $cache_key = config('settings.cache_prefix') . $key . '_global';
+        $duration = config('settings.cache_duration');
+
         Setting::updateOrCreate(['key' => $key, 'owner_id' => null], ['value' => $value]);
+        Cache::put($cache_key, $value, $duration);
     }
 
     public function get($key, $default = null)
     {
         $cache_key = config('settings.cache_prefix') . $key . '_global';
-        $duration = config('settings.cache_duration');
 
-        $value = Cache::remember($cache_key, $duration, function () use ($key) {
-            return Setting::where('key', $key)->whereNull('owner_id')->pluck('value')->first();
-        });
+        if (Cache::has($cache_key)) {
+            return Cache::get($cache_key);
+        }
+
+        $value = Setting::where('key', $key)->whereNull('owner_id')->pluck('value')->first();
 
         return $value ? $value : $default;
     }

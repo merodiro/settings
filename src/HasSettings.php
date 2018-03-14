@@ -16,17 +16,22 @@ trait HasSettings
 
     public function setSettings($key, $value)
     {
+        $cache_key = config('settings.cache_prefix') . $key . '_' . $this->getKey();
+        $duration = config('settings.cache_duration');
+
         Setting::updateOrCreate(['key' => $key, 'owner_id' => $this->getKey()], ['value' => $value,]);
+        Cache::put($cache_key, $value, $duration);
     }
 
     public function getSettings($key, $default = null)
     {
-        $cache_key = config('settings.cache_prefix') . $key . '-' . $this->getKey();
-        $duration = config('settings.cache_duration');
+        $cache_key = config('settings.cache_prefix') . $key . '_' . $this->getKey();
 
-        $value = Cache::remember($cache_key, $duration, function () use ($key) {
-            return Setting::where('key', $key)->where('owner_id', $this->getKey())->pluck('value')->first();
-        });
+        if (Cache::has($cache_key)) {
+            return Cache::get($cache_key);
+        }
+
+        $value = Setting::where('key', $key)->where('owner_id', $this->getKey())->pluck('value')->first();
 
         return $value ? $value : $default;
     }

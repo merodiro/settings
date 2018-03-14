@@ -79,17 +79,16 @@ class UserSettingsTest extends TestCase
         $this->assertEquals('another value', $user->getSettings('name'));
     }
 
-    public function testCacheOnGet()
+    public function testCacheOnSet()
     {
         $user = factory(User::class)->create();
 
+
+        Cache::shouldReceive('put')
+        ->once()
+        ->andReturn('test value');
+
         $user->setSettings('name', 'test value');
-
-        Cache::shouldReceive('remember')
-            ->once()
-            ->andReturn('test value');
-
-        $user->getSettings('name');
     }
 
     public function testForgetSettings()
@@ -117,9 +116,9 @@ class UserSettingsTest extends TestCase
 
         $user->setSettings('name', 'test value');
 
-        Cache::shouldReceive('forget')
+        Cache::shouldReceive('put')
             ->once()
-            ->with('settings_name_' . $user->id);
+            ->with('settings_name_' . $user->id, 'another value', 60);
 
         $user->setSettings('name', 'another value');
     }

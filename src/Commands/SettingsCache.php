@@ -46,7 +46,7 @@ class SettingsCache extends Command
             $cache_key = config('settings.cache_prefix') . $key . '_global';
             $duration = config('settings.cache_duration');
 
-            Cache::set($cache_key, $value, $duration);
+            Cache::put($cache_key, $value, $duration);
         }
 
         $this->info('Cached ' . count($settings) . ' settings');
