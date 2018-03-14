@@ -99,7 +99,7 @@ class UserSettingsTest extends TestCase
 
         Cache::shouldReceive('forget')
             ->once()
-            ->with('settings_name_' . $user->id);
+            ->with($user->settingsCacheKey('name'));
 
         $user->forgetSettings('name');
 
@@ -117,9 +117,39 @@ class UserSettingsTest extends TestCase
         $user->setSettings('name', 'test value');
 
         Cache::shouldReceive('put')
-            ->once()
-            ->with('settings_name_' . $user->id, 'another value', 60);
+        ->once()
+        ->with($user->settingsCacheKey('name'), 'another value', 60);
 
         $user->setSettings('name', 'another value');
+    }
+
+    public function testSettingsCacheCommand()
+    {
+        $user = factory(User::class)->create();
+
+        $user->setSettings('name', 'value');
+        $user->setSettings('another name', 'another value');
+        $user->setSettings('one more name', 'one more value');
+
+        Cache::shouldReceive('put')
+            ->times(3)
+            ->with(Mockery::type('string'), Mockery::type('string'), 60);
+
+        $this->artisan('settings:cache', ['--model' => User::class]);
+    }
+
+    public function testSettingsClearCommand()
+    {
+        $user = factory(User::class)->create();
+
+        $user->setSettings('name', 'value');
+        $user->setSettings('another name', 'another value');
+        $user->setSettings('one more name', 'one more value');
+
+        Cache::shouldReceive('forget')
+        ->times(3)
+        ->with(Mockery::type('string'));
+
+        $this->artisan('settings:clear', ['--model' => User::class]);
     }
 }

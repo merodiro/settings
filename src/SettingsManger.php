@@ -7,6 +7,11 @@ use Merodiro\Settings\Models\Setting;
 
 class SettingsManger
 {
+    public function cacheKey($key)
+    {
+        return config('settings.cache_prefix') . $key . '_global';
+    }
+
     public function all()
     {
         return Setting::whereNull('owner_id')->pluck('value', 'key');
@@ -14,7 +19,7 @@ class SettingsManger
 
     public function set($key, $value)
     {
-        $cache_key = config('settings.cache_prefix') . $key . '_global';
+        $cache_key = static::cacheKey($key);
         $duration = config('settings.cache_duration');
 
         Setting::updateOrCreate(['key' => $key, 'owner_id' => null], ['value' => $value]);
@@ -23,7 +28,7 @@ class SettingsManger
 
     public function get($key, $default = null)
     {
-        $cache_key = config('settings.cache_prefix') . $key . '_global';
+        $cache_key = static::cacheKey($key);
 
         if (Cache::has($cache_key)) {
             return Cache::get($cache_key);

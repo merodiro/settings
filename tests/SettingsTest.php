@@ -80,7 +80,7 @@ class SettingsTest extends TestCase
 
         Cache::shouldReceive('forget')
             ->once()
-            ->with('settings_name_global');
+            ->with(Settings::cacheKey('name'));
 
         Settings::forget('name');
 
@@ -96,7 +96,7 @@ class SettingsTest extends TestCase
 
         Cache::shouldReceive('put')
             ->once()
-            ->with('settings_name_global', 'another value', 60);
+            ->with(Settings::cacheKey('name'), 'another value', 60);
 
         Settings::set('name', 'another value');
     }

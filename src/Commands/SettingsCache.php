@@ -13,7 +13,7 @@ class SettingsCache extends Command
      *
      * @var string
      */
-    protected $signature = 'settings:cache';
+    protected $signature = 'settings:cache {--model=}';
 
     /**
      * The console command description.
@@ -39,16 +39,30 @@ class SettingsCache extends Command
      */
     public function handle()
     {
-        $this->comment('Caching all global settings');
+        $this->comment('Caching all settings');
         $settings = Settings::all();
+        $duration = config('settings.cache_duration');
 
         foreach ($settings as $key => $value) {
-            $cache_key = config('settings.cache_prefix') . $key . '_global';
-            $duration = config('settings.cache_duration');
+            $cache_key = Settings::cacheKey($key);
 
             Cache::put($cache_key, $value, $duration);
         }
 
-        $this->info('Cached ' . count($settings) . ' settings');
+        $model = $this->option('model');
+
+        if (isset($model)) {
+            $users = (new $model)->all();
+            foreach ($users as $user) {
+                $settings = $user->allSettings();
+                foreach ($settings as $key => $value) {
+                    $cache_key = $user->settingsCacheKey($key);
+
+                    Cache::put($cache_key, $value, $duration);
+                }
+            }
+        }
+
+        $this->info('Cached all settings');
     }
 }

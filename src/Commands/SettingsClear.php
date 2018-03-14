@@ -13,14 +13,14 @@ class SettingsClear extends Command
      *
      * @var string
      */
-    protected $signature = 'settings:clear';
+    protected $signature = 'settings:clear {--model=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Clear global settings cache';
+    protected $description = 'Clear settings cache';
 
     /**
      * Create a new command instance.
@@ -43,8 +43,23 @@ class SettingsClear extends Command
         $settings = Settings::all();
 
         foreach ($settings as $key => $value) {
-            $cache_key = config('settings.cache_prefix') . $key . '_global';
+            $cache_key = Settings::cacheKey($key);
+
             Cache::forget($cache_key);
+        }
+
+        $model = $this->option('model');
+
+        if (isset($model)) {
+            $users = (new $model)->all();
+            foreach ($users as $user) {
+                $settings = $user->allSettings();
+                foreach ($settings as $key => $value) {
+                    $cache_key = $user->settingsCacheKey($key);
+
+                    Cache::forget($cache_key);
+                }
+            }
         }
 
         $this->info('Cleared ' . count($settings) . ' settings cache.');
