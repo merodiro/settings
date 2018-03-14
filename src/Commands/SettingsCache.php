@@ -40,27 +40,24 @@ class SettingsCache extends Command
     public function handle()
     {
         $this->comment('Caching all settings');
-        $settings = Settings::all();
         $duration = config('settings.cache_duration');
 
-        foreach ($settings as $key => $value) {
+        Settings::all()->each(function ($value, $key) use ($duration) {
             $cache_key = Settings::cacheKey($key);
 
             Cache::put($cache_key, $value, $duration);
-        }
+        });
 
         $model = $this->option('model');
 
         if (isset($model)) {
-            $users = (new $model)->all();
-            foreach ($users as $user) {
-                $settings = $user->allSettings();
-                foreach ($settings as $key => $value) {
+            (new $model)->all()->each(function ($user) use ($duration) {
+                $user->allSettings()->each(function ($value, $key) use ($user, $duration) {
                     $cache_key = $user->settingsCacheKey($key);
 
                     Cache::put($cache_key, $value, $duration);
-                }
-            }
+                });
+            });
         }
 
         $this->info('Cached all settings');

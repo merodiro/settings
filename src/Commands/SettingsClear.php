@@ -40,28 +40,25 @@ class SettingsClear extends Command
     public function handle()
     {
         $this->comment('Clearing settings cache.');
-        $settings = Settings::all();
 
-        foreach ($settings as $key => $value) {
+        Settings::all()->each(function ($value, $key) {
             $cache_key = Settings::cacheKey($key);
 
             Cache::forget($cache_key);
-        }
+        });
 
         $model = $this->option('model');
 
         if (isset($model)) {
-            $users = (new $model)->all();
-            foreach ($users as $user) {
-                $settings = $user->allSettings();
-                foreach ($settings as $key => $value) {
+            (new $model)->all()->each(function ($user) {
+                $user->allSettings()->each(function ($value, $key) use ($user) {
                     $cache_key = $user->settingsCacheKey($key);
 
                     Cache::forget($cache_key);
-                }
-            }
+                });
+            });
         }
 
-        $this->info('Cleared ' . count($settings) . ' settings cache.');
+        $this->info('Cleared  settings cache.');
     }
 }
