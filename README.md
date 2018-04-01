@@ -101,7 +101,7 @@ $settings = $user->allSettings();
 ### Cache all settings
 Caches all settings for the duration that has been set in settings.php config file
 
-*you can set the duration to a high number or schedule the command to run often to get the best use of cache*
+*you can set the duration to a high number or schedule the command to run often to get the best value of it*
 
 ```bash
 # Global settings only
@@ -115,10 +115,10 @@ php artisan settings:cache --model=App/User
 
 ```bash
 # Global settings only
-php artisan settings:clear
+$ php artisan settings:clear
 
 # Global and User Settings
-php artisan settings:clear --model=App/User
+$ php artisan settings:clear --model=App/User
 ```
 
 ## Blade Directives
