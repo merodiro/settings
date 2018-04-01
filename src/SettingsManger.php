@@ -19,11 +19,7 @@ class SettingsManger
 
     public function set($key, $value)
     {
-        $cache_key = static::cacheKey($key);
-        $duration = config('settings.cache_duration');
-
         Setting::updateOrCreate(['key' => $key, 'owner_id' => null], ['value' => $value]);
-        Cache::put($cache_key, $value, $duration);
     }
 
     public function get($key, $default = null)

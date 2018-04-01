@@ -21,11 +21,7 @@ trait HasSettings
 
     public function setSettings($key, $value)
     {
-        $cache_key = $this->settingsCacheKey($key);
-        $duration = config('settings.cache_duration');
-
         Setting::updateOrCreate(['key' => $key, 'owner_id' => $this->getKey()], ['value' => $value,]);
-        Cache::put($cache_key, $value, $duration);
     }
 
     public function getSettings($key, $default = null)
