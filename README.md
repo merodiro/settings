@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-laravel easy `key => value` global settings
+laravel easy `key => value` global/user settings
 
 ## Install
 
@@ -20,58 +20,108 @@ publish config through
 ```bash
 $ php artisan vendor:publish --provider=Merodiro\Settings\SettingsServiceProvider
 ```
+## Setup a Model
+```php
+use Merodiro\Settings\HasSettings;
+
+class User extends Model
+{
+    use HasSettings;
+    ...
+}
+```
+
 ## Usage
 
 ### Set settings
 creates a record if the key doesn't exist or update it if the key exists
-in addition  to updating the cache
+
+in addition to updating the cache
 
 ```php
+// Global Settings
 Settings::set('key', 'value');
 Settings::set('key', 'another value');
+
+// User Settings
+$user->setSettings('key', 'value');
+$user->setSettings('key', 'another value');
 ```
+
 
 ### Get value from settings
 Returns its value if it exists or the second parameter if it doesn't exist
-and caches settings automatically
 
 ```php
+// Global Settings
 $name = Settings::get('site-name');
 $value = Settings::get('key', 'default');
+
+// User Settings
+$user->getSettings('site-name');
+$user->getSettings('key', 'value');
 ```
 
 ### Delete key from settings
-Remove the key from the cache
+Remove the setting with the given key
+in addition to removing it from the cache
 
 ```php
+// Global Settings
 Settings::forget('key');
+
+// User Settings
+$user->forgetSettings('key');
 ```
 
 ### Delete all settings
-Remove all the keys from the cache
+Delete all the settings
+in addition to removing them from the cache
 
 ```php
+// Global Settings
 Settings::flush();
+
+// User Settings
+$user->flushSettings();
 ```
 
 ### Get all settings
 Returns all settings stored in key => value array
 ```php
+// Global Settings
 $settings = Settings::all();
+
+// User Settings
+$settings = $user->allSettings();
 ```
+
+## Artisan Commands
 
 ### Cache all settings
 Caches all settings for the duration that has been set in settings.php config file
 
+*you can set the duration to a high number or schedule the command to run often to get the best use of cache*
+
 ```bash
+# Global settings only
 php artisan settings:cache
+
+# Global and User Settings
+php artisan settings:cache --model=App/User
 ```
 
 ### Clear cache for all settings
 
 ```bash
+# Global settings only
 php artisan settings:clear
+
+# Global and User Settings
+php artisan settings:clear --model=App/User
 ```
+
+## Blade Directives
 
 ### Get value from blade template
 

@@ -1,7 +1,7 @@
 {
     "name": "merodiro/settings",
     "type": "library",
-    "description": "Easy global settings",
+    "description": "Easy global/user settings",
     "keywords": [
         "Merodiro",
         "Settings"
