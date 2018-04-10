@@ -13,7 +13,7 @@ class SettingsClear extends Command
      *
      * @var string
      */
-    protected $signature = 'settings:clear';
+    protected $signature = 'settings:clear {--model=}';
 
     /**
      * The console command description.
@@ -40,13 +40,25 @@ class SettingsClear extends Command
     public function handle()
     {
         $this->comment('Clearing settings cache.');
-        $settings = Settings::all();
 
-        foreach ($settings as $key => $value) {
-            $cache_key = config('settings.cache_prefix') . $key;
+        Settings::all()->each(function ($value, $key) {
+            $cache_key = Settings::cacheKey($key);
+
             Cache::forget($cache_key);
+        });
+
+        $model = $this->option('model');
+
+        if (isset($model)) {
+            (new $model)->all()->each(function ($user) {
+                $user->allSettings()->each(function ($value, $key) use ($user) {
+                    $cache_key = $user->settingsCacheKey($key);
+
+                    Cache::forget($cache_key);
+                });
+            });
         }
 
-        $this->info('Cleared ' . count($settings) . ' settings cache.');
+        $this->info('Cleared  settings cache.');
     }
 }

@@ -7,17 +7,15 @@ use Merodiro\Settings\Models\Setting;
 
 class SettingObserver
 {
-    public function updated(Setting $setting)
+    public function saved(Setting $setting)
     {
-        $cache_key = config('settings.cache_prefix') . $setting->key;
+        $duration = config('settings.cache_duration');
 
-        Cache::forget($cache_key);
+        Cache::put($setting->cacheKey, $setting->value, $duration);
     }
 
     public function deleted(Setting $setting)
     {
-        $cache_key = config('settings.cache_prefix') . $setting->key;
-
-        Cache::forget($cache_key);
+        Cache::forget($setting->cacheKey);
     }
 }

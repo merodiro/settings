@@ -1,7 +1,7 @@
 {
     "name": "merodiro/settings",
     "type": "library",
-    "description": "Easy global settings",
+    "description": "Easy global/user settings",
     "keywords": [
         "Merodiro",
         "Settings"
@@ -19,6 +19,7 @@
         "php": "~7.0"
     },
     "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.6.1",
         "graham-campbell/testbench": "^5.0",
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "6.*",
@@ -31,6 +32,7 @@
     },
     "autoload-dev": {
         "classmap": [
+            "tests/models/User.php",
             "tests/TestCase.php"
         ]
     },

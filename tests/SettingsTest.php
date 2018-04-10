@@ -6,13 +6,14 @@ class SettingsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testCreateSettings()
+    public function testSetSettings()
     {
         Settings::set('name', 'test value');
 
         $this->assertDatabaseHas('settings', [
             'key' => 'name',
-            'value' => 'test value'
+            'value' => 'test value',
+            'owner_id' => null
         ]);
     }
 
@@ -63,24 +64,23 @@ class SettingsTest extends TestCase
 
         $this->assertEquals('another value', Settings::get('name'));
     }
-    
-    public function testCacheOnGet()
+
+    public function testCacheOnSet()
     {
+        Cache::shouldReceive('put')
+        ->once()
+        ->andReturn('test value');
+
         Settings::set('name', 'test value');
-        
-        Cache::shouldReceive('remember')
-            ->once()
-            ->andReturn('test value');
-        
-        Settings::get('name');
     }
 
     public function testForgetSettings()
     {
         Settings::set('name', 'test value');
+
         Cache::shouldReceive('forget')
             ->once()
-            ->with('settings_name');
+            ->with(Settings::cacheKey('name'));
 
         Settings::forget('name');
 
@@ -93,9 +93,10 @@ class SettingsTest extends TestCase
     public function testForgetSettingsOnUpdate()
     {
         Settings::set('name', 'test value');
-        Cache::shouldReceive('forget')
+
+        Cache::shouldReceive('put')
             ->once()
-            ->with('settings_name');
+            ->with(Settings::cacheKey('name'), 'another value', 60);
 
         Settings::set('name', 'another value');
     }
@@ -106,7 +107,7 @@ class SettingsTest extends TestCase
         Settings::set('another name', 'another value');
         Settings::set('one more name', 'one more value');
 
-        Cache::shouldReceive('set')
+        Cache::shouldReceive('put')
             ->times(3)
             ->with(Mockery::type('string'), Mockery::type('string'), 60);
 
