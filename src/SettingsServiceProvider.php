@@ -18,6 +18,11 @@ class SettingsServiceProvider extends ServiceProvider
             __DIR__.'/config/settings.php' => config_path('settings.php'),
         ], 'config');
 
+        $this->mergeConfigFrom(
+            __DIR__.'/config/settings.php',
+            'settings'
+        );
+
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
 
         if ($this->app->runningInConsole()) {

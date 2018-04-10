@@ -16,7 +16,10 @@ Via Composer
 ``` bash
 $ composer require merodiro/settings
 ```
+
 publish config through
+Optional: only if you want to edit cache configurations
+
 ```bash
 $ php artisan vendor:publish --provider=Merodiro\Settings\SettingsServiceProvider
 ```
@@ -88,6 +91,7 @@ $user->flushSettings();
 
 ### Get all settings
 Returns all settings stored in key => value array
+
 ```php
 // Global Settings
 $settings = Settings::all();
